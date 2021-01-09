@@ -42,9 +42,6 @@ if __name__ == "__main__":
     max_num = int(args.num)
     csv_file = args.output
 
-    consumer_key = "Jg7hPGYF2vRVJ8LsIsdaaC2CL"
-    consumer_secret = "vgvuFr3IirJiKby3a2foMj92TyeRTYNZ4l4VcBg5R18fJLbRTD"
-
     keys = [
         "created_at",
         "id",
