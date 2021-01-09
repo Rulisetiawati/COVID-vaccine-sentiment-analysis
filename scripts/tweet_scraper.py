@@ -3,6 +3,7 @@ import webbrowser
 import time
 import csv
 import argparse
+import os
 
 
 def compose_dict_obj(raw_data, keys, search_words):
@@ -37,13 +38,13 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    consumer_key = os.environ["CONSUMER_KEY"]
+    consumer_secret = os.environ["CONSUMER_SECRET"]
+
     # search_words = "Covid19 vaccine -filter:retweets"
     search_words = args.keyword
     max_num = int(args.num)
     csv_file = args.output
-
-    consumer_key = "Jg7hPGYF2vRVJ8LsIsdaaC2CL"
-    consumer_secret = "vgvuFr3IirJiKby3a2foMj92TyeRTYNZ4l4VcBg5R18fJLbRTD"
 
     keys = [
         "created_at",
