@@ -49,9 +49,15 @@
 7. Delete the untidy columns such as `entities`, `users`, `location` 	
 
 ### EDA
+- Missing values analysis
 - Univariate 
+    - Numeric features frequencies (bar chart)
 - Bivariate
+    - Relationship between predictors against target
 - Multivariate
+    - Relationship among predictors(collinearity)
+- WordCloud
+
 
 ### Feature Extraction
 - Subjectivity / Objectivity
@@ -85,14 +91,48 @@
 
 ### Building Pipeline
 - Further cleaning of text for machine learning algorithm:
-- Exclude punctuations and digits
-- Convert emojis to text description
-- Lowercase all words
-- Lemmatization
+    - Exclude punctuations and digits
+    - Convert emojis to text description
+    - Lowercase all words
+    - Lemmatization
+
+### Text Vectorization
+- Statistic approach:
+    - Bag of Words(hyperparameter tunning)
+    - TF-IDF(How relevant a word is associated to a doc)
+- Neural network:
+    - **_Word embeddings_**
+   
+### Machine Learning Models
+-Linear Models
+    - Logistic Regression(Hyperparameter Tuning)
+- Non-linear Models
+    - Naive Bayes
+    - SVM
+    - Decision Tree
+- Ensembles
+    - Tree-based models
+        - Randomforest
+        - LGBM
+        - XGboost
+        - CatBoost
+ - Averaging
+ - Stacking
+
+### Improvements in the future
+1. Word embedding
+2. Unsupervised learning
+3. Try different scoring metrics
+4. Wrapping up
+5. **Making a website where users can input their own texts**
+    - Github pages
+    - Buying a domain
+
+
 
 ### Commands to run scripts
 **Data collection:**
-*python3 tweet_scraper.py -k <keyword to scrape> --num <max number to scrape> -o <file path of the output file>*
+*python3 tweet_scraper.py -k \<keyword to scrape\> --num \<max number to scrape\> -o \<file path of the output file\>*
 
 **Data cleaning:**
-*python3 tweet_washer.py -f <input file path> -o <output file path>*
+*python3 tweet_washer.py -f \<input file path\> -o \<output file path\>*
