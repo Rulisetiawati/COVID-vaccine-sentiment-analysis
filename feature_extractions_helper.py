@@ -24,6 +24,7 @@ THIRD_PERSON_PRONOUNS = {
     "their",
     "theirs",
 }
+PUNCTUATION_LIST = list(string.punctuation)
 
 ###### Attribution for positive words dictionary: https://gist.github.com/mkulakowski2/4289437
 positive_words = []
@@ -242,3 +243,7 @@ def avg_len_tokens(text):
 def num_of_sent(text):
     """Counts the number of sentences"""
     return text.count(". ") + 1
+
+def num_slang_acronym(text):
+    '''Count the amount of slang acronyms in a text'''
+    return len(re.findall(r"\b({})\b".format("|".join(SLANG)), text.lower()))
