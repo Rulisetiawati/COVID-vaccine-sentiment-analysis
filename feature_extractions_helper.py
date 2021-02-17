@@ -7,6 +7,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk import sent_tokenize, word_tokenize, pos_tag
 from emoji.unicode_codes import UNICODE_EMOJI
 from nltk.tokenize import RegexpTokenizer
+import string
 
 FIRST_PERSON_PRONOUNS = {"i", "me", "my", "mine", "we", "us", "our", "ours"}
 SECOND_PERSON_PRONOUNS = {"you", "your", "yours", "u", "ur", "urs"}
