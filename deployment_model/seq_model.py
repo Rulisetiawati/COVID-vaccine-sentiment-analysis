@@ -1,24 +1,5 @@
-import pandas as pd
-import nltk
-import numpy as np
-import torchtext
 import torch
 import torch.nn as nn
-
-
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-
-from torch.utils.data import Dataset, DataLoader
-from torch import optim
-from torchtext.data import Field, LabelField
-from torchtext.data import TabularDataset
-from torchtext.data import Iterator, BucketIterator
-from torchtext.vocab import Vectors
-
-
-nltk.download("stopwords")
-nltk.download("punkt")
 
 
 class SeqModel(nn.Module):
