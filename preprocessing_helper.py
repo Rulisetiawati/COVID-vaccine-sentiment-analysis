@@ -1,13 +1,14 @@
 import string
-import demoji
+
+# import demoji
 import nltk
 
 from nltk import sent_tokenize, word_tokenize, pos_tag
-from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-from emoji.unicode_codes import UNICODE_EMOJI
 
-nltk.download("wordnet")
+# from emoji.unicode_codes import UNICODE_EMOJI
+
+# nltk.download("wordnet")
 
 
 def preprocessing(text):
@@ -35,12 +36,12 @@ def lemmatize(text):
     return " ".join(lemma_list)
 
 
-def convert_emoji_to_text(tweet):
-    """Convert emoji into text description in the tweet."""
-    tokens = tweet.split()
-    for i, token in enumerate(tokens):
-        if token in UNICODE_EMOJI:
-            emo_desc = demoji.findall(token)[token]
-            new_rep = "_".join(emo_desc.split(":")[0].split())
-            tokens[i] = new_rep
-    return " ".join(tokens)
+# def convert_emoji_to_text(tweet):
+#     """Convert emoji into text description in the tweet."""
+#     tokens = tweet.split()
+#     for i, token in enumerate(tokens):
+#         if token in UNICODE_EMOJI:
+#             emo_desc = demoji.findall(token)[token]
+#             new_rep = "_".join(emo_desc.split(":")[0].split())
+#             tokens[i] = new_rep
+#     return " ".join(tokens)

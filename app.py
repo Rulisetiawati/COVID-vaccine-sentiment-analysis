@@ -1,19 +1,25 @@
-from flask import Flask, render_template, url_for, request, jsonify
+from flask import Flask, render_template, url_for, request
 from deployment_model.seq_model import SeqModel
-from torchtext.data import Field
+from preprocessing_helper import *
+from torchtext.data import Field, Pipeline
 from nltk.tokenize import word_tokenize
-from wordcloud import WordCloud, STOPWORDS
+from wordcloud import STOPWORDS
 
-import torch.nn as nn
 import torch
-import torchtext
 import pickle
-import pdb
 
 
 app = Flask(__name__)
 
-TEXT = Field(sequential=True, tokenize=word_tokenize, lower=True, stop_words=STOPWORDS)
+pre_pipeline = Pipeline(lemmatize)
+pre_pipeline.add_before(preprocessing)
+TEXT = Field(
+    sequential=True,
+    tokenize=word_tokenize,
+    lower=True,
+    stop_words=STOPWORDS,
+    preprocessing=pre_pipeline,
+)
 LABELS = ["neu", "neg", "pos"]
 VOCAB = {}
 with open("vocab.pkl", "rb") as f:
