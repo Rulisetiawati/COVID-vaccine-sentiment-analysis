@@ -1,6 +1,10 @@
 ## COVID19 Vaccine - Sentiment analysis
 <hr>
 
+![alt text](https://github.com/Jeremyzzzz/COVID-vaccine-sentiment-analysis/blob/main/preview.png)
+
+Go to https://covid-vaccine-sentiment.herokuapp.com/ to checkout our web app.
+
 ## **Goal: Classify tweets sentiment towards Covid19 vaccine**
 
 ### Use cases 
