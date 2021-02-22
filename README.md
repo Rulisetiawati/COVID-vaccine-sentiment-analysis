@@ -153,6 +153,8 @@ Go to https://covid-vaccine-sentiment.herokuapp.com/ to checkout our web app.
 **Data cleaning:**
 *python3 tweet_washer.py -f \<input file path\> -o \<output file path\>*
 
+<hr>
+
 ### Attributions
 * Wiktor Jakubczyc, Verb Form Dictionary, https://github.com/monolithpl/verb.forms.dictionary
 * Marcin, Positive word lexicon, https://gist.github.com/mkulakowski2/4289437
