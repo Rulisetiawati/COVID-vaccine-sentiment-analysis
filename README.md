@@ -1,6 +1,10 @@
 ## COVID19 Vaccine - Sentiment analysis
 <hr>
 
+![alt text](https://github.com/Jeremyzzzz/COVID-vaccine-sentiment-analysis/blob/main/preview.png)
+
+Go to https://covid-vaccine-sentiment.herokuapp.com/ to checkout our web app.
+
 ## **Goal: Classify tweets sentiment towards Covid19 vaccine**
 
 ### Use cases 
@@ -119,15 +123,22 @@
  - Averaging
  - Stacking
 
-### Improvements in the future
-1. Word embedding
-2. Unsupervised learning
-3. Try different scoring metrics
-4. Wrapping up
-5. **Making a website where users can input their own texts**
-    - Github pages
-    - Buying a domain
+### Deep Learning Models
+- Baseline: RNN
+- More complex sequence models: GRU, (bidirectional)LSTM
+- Integrated GloVe Embedding to improve performance
+- Hyperparameters: Dropout Layer, Bidirectional layers, Loss functions(SGD, Adam), learning rate, regularization strength, Hidden size
 
+### Other Exploration:
+- Unsupervised learning:
+  - Kmeans
+  - SVD + Topic modeling
+  - Gensim
+- Combine corpus stats features with deep learning model(support configurations)
+
+### Deployments:
+- Flask
+- Heroku
 
 
 ### Commands to run scripts

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
 from deployment_model.seq_model import SeqModel
 from preprocessing_helper import *
 from torchtext.data import Field, Pipeline
@@ -7,9 +7,25 @@ from wordcloud import STOPWORDS
 
 import torch
 import pickle
+import os
+import nltk
 
+# from flask_bootstrap import Bootstrap
+nltk.download("stopwords")
+nltk.download("punkt")
 
-app = Flask(__name__)
+# sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+TEMPLATE_DIR = os.path.abspath("./templates")
+STATIC_DIR = os.path.abspath("./static")
+
+app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
+
+# original stuff:
+# app = Flask(__name__)
+# , static_url_path= '', static_folder= './static/vendor'
+# app._static_folder = './static/vendor'
+# bootstrap = Bootstrap(app)
+RESULT = None
 
 pre_pipeline = Pipeline(lemmatize)
 pre_pipeline.add_before(preprocessing)
@@ -20,7 +36,7 @@ TEXT = Field(
     stop_words=STOPWORDS,
     preprocessing=pre_pipeline,
 )
-LABELS = ["neu", "neg", "pos"]
+LABELS = ["Neutral", "Negative", "Positive"]
 VOCAB = {}
 with open("vocab.pkl", "rb") as f:
     VOCAB = pickle.load(f)
@@ -54,11 +70,14 @@ best_model.load_state_dict(torch.load("model_deploy.pt"))
 
 @app.route("/", methods=["POST", "GET"])
 def index():
-    if request.method == "POST":
-        tweet = request.form["search"]
-        return predict_sentiment(best_model, {"tweet": tweet})[0]
-    else:
-        return render_template("home.html")
+    return render_template("index.html")
+
+
+@app.route("/resultspage", methods=["POST", "GET"])
+def resultspage():
+    tweet = request.form["search"]
+    RESULT = predict_sentiment(best_model, {"tweet": tweet})[0]
+    return render_template("resultspage.html", value=RESULT)
 
 
 def preprocess(tweet):
@@ -75,4 +94,6 @@ def predict_sentiment(model, input_json):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Bind to PORT if defined, otherwise default to 5000.
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
