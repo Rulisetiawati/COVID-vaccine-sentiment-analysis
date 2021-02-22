@@ -140,6 +140,11 @@ Go to https://covid-vaccine-sentiment.herokuapp.com/ to checkout our web app.
 - Flask
 - Heroku
 
+### Improvements in the futrue:
+- Co-training models(agreement on predicted labels)
+- Self-training(set a threshold of the probability for predicted labels, marked as silver data and combined with golden data to retrain agian)
+- Data augmentation(replace words with synsets from wordNet)
+
 
 ### Commands to run scripts
 **Data collection:**
@@ -147,3 +152,17 @@ Go to https://covid-vaccine-sentiment.herokuapp.com/ to checkout our web app.
 
 **Data cleaning:**
 *python3 tweet_washer.py -f \<input file path\> -o \<output file path\>*
+
+<hr>
+
+### Attributions
+* Wiktor Jakubczyc, Verb Form Dictionary, https://github.com/monolithpl/verb.forms.dictionary
+* Marcin, Positive word lexicon, https://gist.github.com/mkulakowski2/4289437
+    * Minqing Hu and Bing Liu. "Mining and Summarizing Customer Reviews." 
+Proceedings of the ACM SIGKDD International Conference on Knowledge 
+Discovery and Data Mining (KDD-2004), Aug 22-25, 2004, Seattle, Washington, USA, 
+* Marcin, Negative word lexicon, https://gist.github.com/mkulakowski2/4289441
+    * Minqing Hu and Bing Liu. "Mining and Summarizing Customer Reviews." 
+Proceedings of the ACM SIGKDD International Conference on Knowledge 
+Discovery and Data Mining (KDD-2004), Aug 22-25, 2004, Seattle, Washington, USA, 
+* Liang Wu, Fred Morstatter, Huan Liu, SlangSD, http://liangwu.me/slangsd/
