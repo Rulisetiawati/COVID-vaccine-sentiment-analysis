@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect
 from deployment_model.seq_model import SeqModel
-from preprocessing_helper import *
+from utils.preprocessing_helper import *
 from torchtext.data import Field, Pipeline
 from nltk.tokenize import word_tokenize
 from wordcloud import STOPWORDS
@@ -38,7 +38,7 @@ TEXT = Field(
 )
 LABELS = ["Neutral", "Negative", "Positive"]
 VOCAB = {}
-with open("vocab.pkl", "rb") as f:
+with open("./models/vocab.pkl", "rb") as f:
     VOCAB = pickle.load(f)
 
 best_config = {
@@ -65,7 +65,7 @@ best_model = SeqModel(
     unit="gru",
     more_features=False,
 )
-best_model.load_state_dict(torch.load("model_deploy.pt"))
+best_model.load_state_dict(torch.load("./models/model_deploy.pt"))
 
 
 @app.route("/", methods=["POST", "GET"])
