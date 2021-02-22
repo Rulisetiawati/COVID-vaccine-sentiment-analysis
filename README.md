@@ -140,6 +140,11 @@ Go to https://covid-vaccine-sentiment.herokuapp.com/ to checkout our web app.
 - Flask
 - Heroku
 
+### Improvements in the futrue:
+- Co-training models(agreement on predicted labels)
+- Self-training(set a threshold of the probability for predicted labels, marked as silver data and combined with golden data to retrain agian)
+- Data augmentation(replace words with synsets from wordNet)
+
 
 ### Commands to run scripts
 **Data collection:**
