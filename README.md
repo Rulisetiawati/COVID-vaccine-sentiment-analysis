@@ -1,69 +1,145 @@
-# [Start Bootstrap - Landing Page](https://startbootstrap.com/theme/landing-page/)
+## COVID19 Vaccine - Sentiment analysis
+<hr>
 
-[Landing Page](https://startbootstrap.com/theme/landing-page/) is a multipurpose landing page template for [Bootstrap](https://getbootstrap.com/) created by [Start Bootstrap](https://startbootstrap.com/).
+## **Goal: Classify tweets sentiment towards Covid19 vaccine**
 
-## Preview
+### Use cases 
+1. Detecting people’s opinion towards vaccine
+2. Identify overall customer ratings for various vaccines from different providers
+3. Investigate potential social problems about vaccine
 
-[![Landing Page Preview](https://assets.startbootstrap.com/img/screenshots/themes/landing-page.png)](https://startbootstrap.github.io/startbootstrap-landing-page/)
+### Data Collection
+- Create developer accounts for TwitterAPI
+- Investigate JSON response and filter out relevant attributes for classification
+- Use python Tweepy to connect the API
+- Scrape data related to Covid19 Vaccine, Pfizer, Moderna, Astrazeneca, Sinovac
+- Combine all sources of data 
 
-**[View Live Preview](https://startbootstrap.github.io/startbootstrap-landing-page/)**
+### Data Annotation
+1. Target: pos, neu, neg
+2. Evaluate if the tweet can be classified, if no, put ‘del’ in the target column
+3. Decision-making:
+    - How to deal with questions?
+    - Do we treat subjective and objective tweets differently?
+    - How to deal with tweets with several sentences and compound sentiments?
+    - How to deal with modality, eg. should, could have been etc.?
+    - Tweets with political standpoint might have personal sentiment tendency?
+    - How to deal with wish or command?
+    - How to deal with Sarcasm?
+4. Criteria regarding to annotation:
+    - Questions will depend, determine based on the tone.
+    - Usually subjective tweets have a strong sentiment and objective tweets have a neutral sentiment such as news headlines or ads. Classify subjective ones as pos or neg, except they are obviously neutral and objective ones as neutral unless they are obviously pos or neg.
+    - If tweets have more than two negative or positive words, tweets should be positive or negative. If it has a tie, classify as neutral.
+    - Modality will depend, but cases like could have been are usually negative
+    - Do not pick standpoints, stand in the middle point to classify the sentiments.
+    - Wishes and hope are classified as positive. Command usually is negative
+    - Sarcasm should be classified as negative.
+    - If we have to read more than two times to determine, put ‘del’ or ‘neu’
+    
+### Data Cleaning
+1. Remove duplicates tweets based on text
+2. Extract `location` from `user` column, discard `coordination` column
+3. Extract `hashtags` from `entities` column 
+4. Split location into the format of city, province(two capitalized letters), county
+5. Preprocessing the `full_text` column
+    - Exclude URLs
+    - Exclude mention sign
+    - Exclude HTML reference characters
+6. To keep `entities` column clean, convert it to the number of hashtags
+7. Delete the untidy columns such as `entities`, `users`, `location` 	
 
-## Status
+### EDA
+- Missing values analysis
+- Univariate 
+    - Numeric features frequencies (bar chart)
+- Bivariate
+    - Relationship between predictors against target
+- Multivariate
+    - Relationship among predictors(collinearity)
+- WordCloud
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/StartBootstrap/startbootstrap-landing-page/master/LICENSE)
-[![npm version](https://img.shields.io/npm/v/startbootstrap-landing-page.svg)](https://www.npmjs.com/package/startbootstrap-landing-page)
-[![Build Status](https://travis-ci.org/StartBootstrap/startbootstrap-landing-page.svg?branch=master)](https://travis-ci.org/StartBootstrap/startbootstrap-landing-page)
-[![dependencies Status](https://david-dm.org/StartBootstrap/startbootstrap-landing-page/status.svg)](https://david-dm.org/StartBootstrap/startbootstrap-landing-page)
-[![devDependencies Status](https://david-dm.org/StartBootstrap/startbootstrap-landing-page/dev-status.svg)](https://david-dm.org/StartBootstrap/startbootstrap-landing-page?type=dev)
 
-## Download and Installation
+### Feature Extraction
+- Subjectivity / Objectivity
+    - Number of first-person pronouns
+    - Number of second-person pronouns
+    - Number of third-person pronouns
+- Part of speech
+    - Number of past-tense verbs
+    - Number of future-tense verbs
+    - Number of common nouns
+    - Number of proper nouns
+    - Number of adverbs
+    - Number of wh- words
+    - Number of coordinating conjunctions
+- Corpus statistics
+    - Number of commas
+    - Number of multi-character punctuation tokens
+    - Average length of sentences, in tokens
+    - Average length of tokens, excluding punctuation-only tokens, in characters
+    - Number of sentences
+    - Number of words in uppercase(>= 3 letters long)
+    - Number of slang acronyms
+    - Number of hashtags
+    - Sentiment words and phrases:
+    - Positive words ratio per tweet
+    - Negative words ratio per tweet
+- Other features
+    - Location(city, province, country)
+    - Retweet count
+    - Favourite count
 
-To begin using this template, choose one of the following options to get started:
+### Building Pipeline
+- Further cleaning of text for machine learning algorithm:
+    - Exclude punctuations and digits
+    - Convert emojis to text description
+    - Lowercase all words
+    - Lemmatization
 
-* [Download the latest release on Start Bootstrap](https://startbootstrap.com/theme/landing-page/)
-* Install via npm: `npm i startbootstrap-landing-page`
-* Clone the repo: `git clone https://github.com/StartBootstrap/startbootstrap-landing-page.git`
-* [Fork, Clone, or Download on GitHub](https://github.com/StartBootstrap/startbootstrap-landing-page)
+### Text Vectorization
+- Statistic approach:
+    - Bag of Words(hyperparameter tunning)
+    - TF-IDF(How relevant a word is associated to a doc)
+- Neural network:
+    - **_Word embeddings_**
+   
+### Machine Learning Models
+-Linear Models
+    - Logistic Regression(Hyperparameter Tuning)
+- Non-linear Models
+    - Naive Bayes
+    - SVM
+    - Decision Tree
+- Ensembles
+    - Tree-based models
+        - Randomforest
+        - LGBM
+        - XGboost
+        - CatBoost
+ - Averaging
+ - Stacking
 
-## Usage
+### Deep Learning Models
+- Baseline: RNN
+- More complex sequence models: GRU, (bidirectional)LSTM
+- Integrated GloVe Embedding to improve performance
+- Hyperparameters: Dropout Layer, Bidirectional layers, Loss functions(SGD, Adam), learning rate, regularization strength, Hidden size
 
-### Basic Usage
+### Other Exploration:
+- Unsupervised learning:
+  - Kmeans
+  - SVD + Topic modeling
+  - Gensim
+- Combine corpus stats features with deep learning model(support configurations)
 
-After downloading, simply edit the HTML and CSS files included with the template in your favorite text editor to make changes. These are the only files you need to worry about, you can ignore everything else! To preview the changes you make to the code, you can open the `index.html` file in your web browser.
+### Deployments:
+- Flask
+- Heroku
 
-### Advanced Usage
 
-After installation, run `npm install` and then run `npm start` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
+### Commands to run scripts
+**Data collection:**
+*python3 tweet_scraper.py -k \<keyword to scrape\> --num \<max number to scrape\> -o \<file path of the output file\>*
 
-#### Gulp Tasks
-
-* `gulp` the default task that builds everything
-* `gulp watch` browserSync opens the project in your default browser and live reloads when changes are made
-* `gulp css` compiles SCSS files into CSS and minifies the compiled CSS
-* `gulp js` minifies the themes JS file
-* `gulp vendor` copies dependencies from node_modules to the vendor directory
-
-You must have npm installed globally in order to use this build environment.
-
-## Bugs and Issues
-
-Have a bug or an issue with this template? [Open a new issue](https://github.com/StartBootstrap/startbootstrap-landing-page/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](https://startbootstrap.com/theme/landing-page/).
-
-## About
-
-Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
-
-* <https://startbootstrap.com>
-* <https://twitter.com/SBootstrap>
-
-Start Bootstrap was created by and is maintained by **[David Miller](https://davidmiller.io/)**.
-
-* <https://davidmiller.io>
-* <https://twitter.com/davidmillerhere>
-* <https://github.com/davidtmiller>
-
-Start Bootstrap is based on the [Bootstrap](https://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
-
-## Copyright and License
-
-Copyright 2013-2020 Start Bootstrap LLC. Code released under the [MIT](https://github.com/StartBootstrap/startbootstrap-landing-page/blob/gh-pages/LICENSE) license.
+**Data cleaning:**
+*python3 tweet_washer.py -f \<input file path\> -o \<output file path\>*
