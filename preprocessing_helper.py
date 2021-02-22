@@ -2,21 +2,30 @@ import string
 
 # import demoji
 import nltk
+import re
 
 from nltk import sent_tokenize, word_tokenize, pos_tag
 from nltk.stem import WordNetLemmatizer
 
 # from emoji.unicode_codes import UNICODE_EMOJI
 
-# nltk.download("wordnet")
+nltk.download("wordnet")
 
 
 def preprocessing(text):
     """Exclude punctuations and digits from text."""
+    text = process_tweets(text)
     text = text.lower()
     exclude = string.punctuation + string.digits
     for i in exclude:
         text = text.replace(i, "")
+    return text
+
+
+def process_tweets(text):
+    """Exclude mentions, urls, and html reference characters in a string using regular expression"""
+    text = re.sub("(\@|https:\/\/)\S+", "", text)  # remove mentions and urls
+    text = re.sub(r"&[a-z]+;", "", text)  # exclude html reference characters
     return text
 
 
